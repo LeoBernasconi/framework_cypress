@@ -1,4 +1,7 @@
 /// <reference types="Cypress" />
+/// <reference types="cypress-iframe" />
+import 'cypress-iframe'
+
 describe('Complex elements', function(){
 
     it('Working with alerts',function(){
@@ -28,6 +31,17 @@ describe('Complex elements', function(){
         cy.get('#opentab').invoke('removeAttr','target').click()         
     })
 
+    it('Switch between domains', function(){
+        cy.visit('https://rahulshettyacademy.com/AutomationPractice/')
+        cy.get('#opentab').then(function(newObject){
+            const newUrl = newObject.prop('href')
+            cy.visit(newUrl)
+            cy.origin(newUrl,()=>{
+                cy.contains('About us').click()
+            })
+        })
+    })
+
     it('Working with web tables',function(){
         cy.visit('https://rahulshettyacademy.com/AutomationPractice/')
         const courseName ='Master Selenium Automation in simple Python Language'
@@ -41,7 +55,7 @@ describe('Complex elements', function(){
         })
     })
 
-    it.only('Mouse move',function(){
+    it('Mouse move',function(){
         cy.visit('https://rahulshettyacademy.com/AutomationPractice/')
         //Use mouse move to show a menu and click an option
         cy.get('div.mouse-hover-content').invoke('show')
@@ -52,6 +66,14 @@ describe('Complex elements', function(){
         cy.url().should('not.contain','top')
     })
     
+    it('Working with iFrames',function(){
+        //Need to install cypress-iframe --> npm install -D cypress-iframe (and then import it int he spec)
+        //Enter the iframe, go to membeesgop and validate rhe nulber of programa (2)
+        cy.visit('https://rahulshettyacademy.com/AutomationPractice/')
+        cy.frameLoaded('#courses-iframe')
+        cy.iframe().find('a[href="mentorship"]').eq(0).click()
+        cy.iframe().find('h2[class="pricing-title"]').should('have.length','2')
+    })
 
     
 })
