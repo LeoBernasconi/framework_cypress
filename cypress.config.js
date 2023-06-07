@@ -2,6 +2,10 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
+  defaultCommandTimeout: 6000,//Timeout defined for waiting for elements/actions
+  env:{
+    url: "https://rahulshettyacademy.com"
+  },
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
