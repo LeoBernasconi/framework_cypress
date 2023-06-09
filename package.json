@@ -4,12 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": " "
+    "all": "npx cypress run --browser chrome",
+    "all_headed": "npm run all -- --headed --no-exit",
+    "all_parallel": "npm run all -- --parallel",
+    "all_api": "npx cypress run --spec C:\\automation_repositories\\framework_cypress\\cypress\\integration\\intro\\endpoints.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^12.13.0",
-    "cypress-iframe": "^1.0.1"
+    "cypress": "^12.14.0",
+    "cypress-iframe": "^1.0.1",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.3.0",
+    "mochawesome-report-generator": "^6.2.0"
   }
 }

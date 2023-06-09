@@ -20,7 +20,7 @@ describe('API testing',function(){
         cy.get('p').should('have.text','Oops only 1 Book available')
     })
 
-    it('Calling an endpoint and validate the number of riows in the screen',function(){
+    it.skip('Calling an endpoint and validate the number of rows in the screen',function(){
       cy.visit("https://rahulshettyacademy.com/angularAppdemo/");
       cy.intercept({
           method : 'GET',

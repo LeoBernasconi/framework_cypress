@@ -4,6 +4,14 @@ const { defineConfig } = require("cypress");
 module.exports = defineConfig({
   //Timeout defined for waiting for elements/actions (could be overwrite on the spec)
   defaultCommandTimeout: 6000,
+  //
+  reporter: 'mochawesome',
+  reporterOptions: {
+    reportDir: 'cypress/reports/mochawesome',
+    overwrite: false,
+    html: true,
+    json: true,
+  },
   //Values to be taken when executing the tests
   env:{
     url: "https://rahulshettyacademy.com"
