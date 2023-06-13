@@ -1,16 +1,18 @@
 //Default information is stored in Runner/Settings/Project settings / Resolved configuration --> information may be overrided
 const { defineConfig } = require("cypress");
+const preprocessor = require("@badeball/cypress-cucumber-preprocessor");
+const browserify = require("@badeball/cypress-cucumber-preprocessor/browserify");
 
 module.exports = defineConfig({
   //Timeout defined for waiting for elements/actions (could be overwrite on the spec)
   defaultCommandTimeout: 6000,
-  //
+  //For generating mochawesome reports --> set html or json as true
   reporter: 'mochawesome',
   reporterOptions: {
     reportDir: 'cypress/reports/mochawesome',
-    overwrite: false,
-    html: true,
-    json: true,
+    overwrite: true,
+    html: false,
+    json: false,
   },
   //Values to be taken when executing the tests
   env:{
@@ -26,9 +28,15 @@ module.exports = defineConfig({
     openMode: 0,//When executing from the Cypress UI
     },
   e2e: {
-    setupNodeEvents(on, config) {
+    async setupNodeEvents(on, config) {
+      //Plugin to handle Cucumber 
+      //Need to install "npm install @badeball/cypress-cucumber-preprocessor" and do some configuration on package.json. 
+      //Extension "Visual studio cucumber bdd" is welcome
+      await preprocessor.addCucumberPreprocessorPlugin(on, config);
+      on("file:preprocessor", browserify.default(config));
     },
     //Indicates what Cypress will look for tests
-    specPattern:'cypress/integration/intro/*.js'
+    specPattern:'cypress/integration/intro/*.js'//For classic tests inside js files
+    //specPattern:'cypress/integration/BDD/*.feature'//For BDD approach 
   },
 });
