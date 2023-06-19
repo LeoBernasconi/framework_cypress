@@ -1,4 +1,6 @@
-describe('API testing',function(){
+const { interfaces } = require("mocha")
+
+describe('API testing',function(){ 
 
     it('First intercept endpoint',function(){
         cy.visit('https://rahulshettyacademy.com/angularAppdemo/')
@@ -48,8 +50,9 @@ describe('API testing',function(){
         "aisle":"001",
         "author":"John foe"
         }).then(function(response){
-          expect(response.body).to.have.property('Msg','successfully added')
-          expect(response.status).to.eq(200)
+          expect(response.status).to.eq(200)//Status code
+          //Asser that the body contains a filed "Msg" with certain value
+          expect(response.body).to.have.property('Msg','successfully added') 
         })
     })
 

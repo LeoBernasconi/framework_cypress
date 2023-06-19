@@ -1,4 +1,4 @@
-Feature: E2E ecommerce validation
+Feature: E2E ecommerce validation 
 
     Scenario: Ecommerce product delivery
     Given I open the ecommerce page

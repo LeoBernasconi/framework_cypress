@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "open":"npx cypress open",
+    "open": "npx cypress open",
     "all": "npx cypress run --browser chrome",
     "all_headed": "npm run all -- --headed --no-exit",
     "all_parallel": "npm run all -- --parallel",
@@ -15,6 +15,7 @@
   "devDependencies": {
     "cypress": "^12.14.0",
     "cypress-iframe": "^1.0.1",
+    "cypress-sql-server": "^1.0.0",
     "mochawesome": "^7.1.3",
     "mochawesome-merge": "^4.3.0",
     "mochawesome-report-generator": "^6.2.0",

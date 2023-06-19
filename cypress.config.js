@@ -2,6 +2,7 @@
 const { defineConfig } = require("cypress");
 const preprocessor = require("@badeball/cypress-cucumber-preprocessor");
 const browserify = require("@badeball/cypress-cucumber-preprocessor/browserify");
+const sqlServer = require('cypress-sql-server');
 
 module.exports = defineConfig({
   //Timeout defined for waiting for elements/actions (could be overwrite on the spec)
@@ -34,6 +35,20 @@ module.exports = defineConfig({
       //Extension "Visual studio cucumber bdd" is welcome
       await preprocessor.addCucumberPreprocessorPlugin(on, config);
       on("file:preprocessor", browserify.default(config));
+      //DB connection data
+      config.db = {
+        userName: "userName",
+        password: "password",
+        server: "serverName",
+        options: {
+            database: "databaseName",
+            encrypt: true,
+            rowCollectionOnRequestCompletion : true
+        }
+    }
+      //Pluging to handle SQL database connection
+      tasks = sqlServer.loadDBPlugin(config.db);
+      on('task', tasks);
     },
     //Indicates what Cypress will look for tests
     specPattern:'cypress/integration/intro/*.js'//For classic tests inside js files

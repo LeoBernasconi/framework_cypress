@@ -19,7 +19,7 @@ describe('Other useful scenarios',async()=>{
         cy.fastLogin(url)
     })
 
-    it.only('Downloading CSV files',()=>{
+    it('Downloading CSV files',()=>{
         cy.fastLogin('https://rahulshettyacademy.com/client')
         //Proceed with the checkout and download the CSV
         cy.get(".card-body b").eq(1).then(function(ele)
@@ -44,9 +44,17 @@ describe('Other useful scenarios',async()=>{
         {
           const csv =  await neatCSV(text)
           console.log(csv)
-          //Validate the product name
+          //Validate the product name 
           const actualProductCSV = csv[0]["Product Name"]
           expect(productName).to.equal(actualProductCSV)
         })
     })
+
+    it('Database connection', function(){
+        cy.sqlServer('select * from Persons').then(function(result){
+            console.log(result[0])//print the first element of the array
+            console.log(result[0][1])//print the second column of the first element of the array
+        })
+    })
+
 })
