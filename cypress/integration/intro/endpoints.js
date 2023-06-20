@@ -125,7 +125,7 @@ describe('API testing',function(){
         failOnStatusCode: false
       })
       //Validate the response
-      .then((response) => {
+      .then((response) => { 
           const responseBody = response.body;
           console.log(responseBody)
           expect(response.duration).to.be.lessThan(40000)//Validate the duration of the response

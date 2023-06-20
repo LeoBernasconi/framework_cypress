@@ -3,6 +3,8 @@ const { defineConfig } = require("cypress");
 const preprocessor = require("@badeball/cypress-cucumber-preprocessor");
 const browserify = require("@badeball/cypress-cucumber-preprocessor/browserify");
 const sqlServer = require('cypress-sql-server');
+const excelToJson = require('convert-excel-to-json');
+const fs = require('fs'); 
 
 module.exports = defineConfig({
   //Timeout defined for waiting for elements/actions (could be overwrite on the spec)
@@ -49,6 +51,16 @@ module.exports = defineConfig({
       //Pluging to handle SQL database connection
       tasks = sqlServer.loadDBPlugin(config.db);
       on('task', tasks);
+      //Node task to handle Excel files
+      on('task',{
+        excepToJsonConverter(filePath){
+            const result = excelToJson({
+            source: fs.readFileSync(fileName)
+          });
+          return result
+        }
+      })
+
     },
     //Indicates what Cypress will look for tests
     specPattern:'cypress/integration/intro/*.js'//For classic tests inside js files

@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 /// <reference types="cypress-iframe" />
-import 'cypress-iframe'
+import 'cypress-iframe' 
 
 describe('Complex elements', function(){
 

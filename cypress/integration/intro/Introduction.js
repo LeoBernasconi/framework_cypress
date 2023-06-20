@@ -47,7 +47,7 @@ describe('Introduction',function(){
         cy.contains('Place Order').click()
     })
 
-    it('Wortking with checkboxes',function(){
+    it('Working with checkboxes',function(){
         cy.visit('https://rahulshettyacademy.com/AutomationPractice/')
         //Check and uncheck specific options
         cy.get('input#checkBoxOption1').check().should('be.checked').and('have.value','option1')

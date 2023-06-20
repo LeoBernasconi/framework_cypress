@@ -19,7 +19,7 @@ describe('Other useful scenarios',async()=>{
         cy.fastLogin(url)
     })
 
-    it('Downloading CSV files',()=>{
+    it('Downloading and validating CSV files',()=>{
         cy.fastLogin('https://rahulshettyacademy.com/client')
         //Proceed with the checkout and download the CSV
         cy.get(".card-body b").eq(1).then(function(ele)
@@ -49,6 +49,40 @@ describe('Other useful scenarios',async()=>{
           expect(productName).to.equal(actualProductCSV)
         })
     })
+
+    it.only('Downloading and validating Excel files',()=>{
+        cy.fastLogin('https://rahulshettyacademy.com/client')
+        //Proceed with the checkout and download the Excel file
+        cy.get(".card-body b").eq(1).then(function(ele)
+            {
+            productName =  ele.text();
+            })
+        cy.get(".card-body button:last-of-type").eq(1).click();
+        cy.get("[routerlink*='cart']").click();
+        cy.contains("Checkout").click();
+        cy.get("[placeholder*='Country']").type("ind")
+        cy.get('.ta-results button').each(($e1, index, $list) => {
+        if($e1.text()===" India"){
+            cy.wrap($e1).click()
+            }
+        })
+        cy.get(".action__submit").click();
+        cy.wait(2000)
+        cy.contains('Excel').click();
+        //Read the Excel file       
+        const filePath = Cypress.config("fileServerFolder")+"/cypress/downloads/order-invoice_leobernasconi.xlsx"
+        cy.task('excepToJsonConverter',filePath).then(function(result){
+            cy.log(result)
+            cy.log(result.data[1].A)
+            expect(productName).to.equal(result.data[1].B)
+        })
+ 
+
+
+
+
+    })
+
 
     it('Database connection', function(){
         cy.sqlServer('select * from Persons').then(function(result){
