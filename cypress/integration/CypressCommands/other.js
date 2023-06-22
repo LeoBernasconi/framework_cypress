@@ -50,7 +50,7 @@ describe('Other useful scenarios',async()=>{
         })
     })
 
-    it.only('Downloading and validating Excel files',()=>{
+    it('Downloading and validating Excel files',()=>{
         cy.fastLogin('https://rahulshettyacademy.com/client')
         //Proceed with the checkout and download the Excel file
         cy.get(".card-body b").eq(1).then(function(ele)
@@ -76,13 +76,14 @@ describe('Other useful scenarios',async()=>{
             cy.log(result.data[1].A)
             expect(productName).to.equal(result.data[1].B)
         })
- 
-
-
-
-
     })
 
+    it('Fast assertion on Excel file',function(){
+        const filePath = Cypress.config("fileServerFolder")+"/cypress/downloads/order-invoice_leobernasconi.xlsx"
+        cy.readFile(filePath).then(function(text){
+            text(text).to.include('Adidas')
+        })
+    })
 
     it('Database connection', function(){
         cy.sqlServer('select * from Persons').then(function(result){
