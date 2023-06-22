@@ -4,11 +4,11 @@ describe('API testing',function(){
 
     it('First intercept endpoint',function(){
         cy.visit('https://rahulshettyacademy.com/angularAppdemo/')
+        //Command intercept --> manipulate endpoints (request/response)
         cy.intercept({
             method:'GET',
             url:'https://rahulshettyacademy.com/Library/GetBook.php?AuthorName=shetty',
-        },
-        {
+        }, {
             statusCode:200,
             body:[{
                 "book_name":"RestAssure with Java",
