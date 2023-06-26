@@ -5,7 +5,7 @@ import KartPage from "../../pageObjects/KartPage"
 import DeliveryPage from "../../pageObjects/DeliveryPage"
 
 
-describe('Annotations',function(){
+describe('Green kart',function(){
 
     const homePage = new HomePage()
     const shopPage = new ShopPage()
@@ -17,18 +17,7 @@ describe('Annotations',function(){
         cy.fixture('example').then(function(data){this.data=data})
     })
 
-    it('Implementing some validations',function(){
-        cy.visit('https://rahulshettyacademy.com/angularpractice/')
-        //Complete some field son the form
-        homePage.input_name().type(this.data.name)
-        homePage.input_gender().select(this.data.gender)
-        //Validations
-        homePage.input_secondName().should('have.value',this.data.name) //Value of an element
-        homePage.input_name().should('have.attr','minlength','2') //Some attribute of the element
-        homePage.select_entrepreneur().should('be.disabled') //That a element is not enable
-    })
-
-    it.only('Complete the purchase',function(){
+    it('Complete a purchase',function(){
         cy.visit(Cypress.env('url') + '/angularpractice/')
         homePage.link_shop().click()
         //Add product to the cart

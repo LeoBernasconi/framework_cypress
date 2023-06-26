@@ -63,7 +63,7 @@ module.exports = defineConfig({
 
     },
     //Indicates what Cypress will look for tests
-    specPattern:'cypress/integration/CypressCommands/*.js'//For classic tests inside js files
+    specPattern:'cypress/integration/*/*.js'//For classic tests inside js files
     //specPattern:'cypress/integration/BDD/*.feature'//For BDD approach 
   },
 });
