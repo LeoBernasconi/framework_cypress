@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('Browser',function(){
 
     it('cy.url() - get the current URL', () => {

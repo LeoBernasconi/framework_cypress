@@ -2,44 +2,6 @@
 
 describe('Simple commands',function(){
 
-    it('Identifying elements: using attributes',()=>{
-      cy.visit('https://example.cypress.io/commands/actions')
-      //Class
-      cy.get('.action-email').should('exist')//Not declaring element type
-      cy.get('input.action-email').should('exist')//Declaring element type: input
-      //Id
-      cy.get('#email1').should('exist')//Not declaring element type
-      cy.get('input#email1').should('exist')//Declaring element type: input
-      //Xpath
-      cy.get('*[type="email"]').should('exist')//Not declaring element type
-      cy.get('input[type="email"]').should('exist')//Declaring element type: input
-      //Contains
-      cy.contains('Submit').should('exist')
-      //Identify an array and navigate throw items
-      cy.get('input[value="checkbox1"]').eq(0).check()
-      cy.get('input[value="checkbox1"]').eq(1).check()
-      cy.get('input[value="checkbox1"]').eq(2).check()
-      //cy.get('input[value="checkbox1"]').eq(3).check() --> Not existent element --> FAIL
-    })
-
-    it('Identifying element: parent and children',()=>{
-      cy.visit('https://example.cypress.io/todo')
-      //Get the children by element type (indicanting the element typ (li))
-      cy.get('.todo-list li').should('exist')
-      //Get the parent
-      cy.contains('Pay electric bill').parent().should('exist')
-      //Find a specific children given a parent element
-      cy.get('.filters').contains('Completed').should('exist')
-      cy.contains('Pay electric bill').parent().find('.destroy').should('exist')
-    })
-
-    it('Identifying element: other ways',()=>{
-      cy.visit('https://example.cypress.io/todo')
-      //Get the first and last element of an array of elements 
-      cy.get('.todo-list li').first().should('exist')//First
-      cy.get('.todo-list li').last().should('exist')//Last
-    })
-
     it('Interacting with elements: simple commands',()=>{
       cy.visit('https://example.cypress.io/commands/actions')
       //Click an element
@@ -83,68 +45,12 @@ describe('Simple commands',function(){
       cy.get('.action-blur').type('About to blur').blur()
     })
 
-    it('Assertions',()=>{
-      cy.visit('https://example.cypress.io/todo')
-      //Validate its existence
-      cy.get('.todo-list li').should('exist')
-      cy.get('.todo-list lu').should('not.exist')
-      //Validate its length
-      cy.get('.todo-list li').should('have.length', 2)
-      //Validate the text of an element
-      cy.contains('Active').should('have.text','Active')
-      cy.contains('Active').should('not.have.text','random text')      
-      //Validate the value of a specific atribute 
-      cy.get('.toggle-all').invoke('attr', 'type').should('eq', 'checkbox')
-      cy.get('.toggle-all').should('have.attr','type','checkbox')
-      //Validate the existence of an attribute
-      cy.get('.toggle-all').should('have.attr','type')
-      //Validate the class
-      cy.get('.destroy').should('have.class', 'todo-button')
-      //Validate the id
-      cy.get('#toggle-all').should('have.id', 'toggle-all')
-      cy.visit('https://example.cypress.io/commands/actions')
-      //Validate the text of an element
-      cy.contains('Submit').should('have.text', 'Submit')
-      cy.contains('Submit').should('contain', 'Submit')
-      cy.contains('Submit').should('have.html', 'Submit')
-      //Validate the element type
-      cy.contains('Submit').should('match', 'button')
-      //Validate if a checkbox/radio_button is checked/unchecked
-      cy.get('.action-checkboxes [type="checkbox"]').not('[disabled]').check().should('be.checked')      
-      cy.get('.action-checkboxes [type="checkbox"]').not('[disabled]').uncheck().should('not.be.checked') 
-      //Validate the visibility of an element
-      cy.contains('Submit').should('be.visible')
-      cy.get('#scroll-horizontal button').should('not.be.visible')
-      //Validate the value of a select
-      cy.get('.action-select').should('have.value', '--Select a fruit--') 
-      cy.get('.action-select').select('apples').should('have.value', 'fr-apples')
-      //Validate multiple values in a Select
-      cy.get('.action-select-multiple').select(['apples', 'oranges', 'bananas'])
-        .invoke('val').should('deep.equal', ['fr-apples', 'fr-oranges', 'fr-bananas']) 
-      //Validate that a Select element contains an option
-      cy.get('.action-select-multiple').invoke('val').should('include', 'fr-oranges')
-      //Validating the value of a input-range element
-      cy.get('.trigger-input-range').invoke('val', 25).trigger('change')
-        .get('input[type=range]').siblings('p').should('have.text', '25')
-      //Validating multiple assertions
-      cy.contains('Submit').should('exist').and('have.attr', 'type')    
-      //Force assertions
-      expect(true).to.be.true  
-      expect(false).to.be.false  
-      expect(0).to.equal(0)
-      //Validating values of variables
-      const name = 'Ferro'
-      expect(name).to.equal('Ferro')
-    })
-
-    it.only('Logging data',()=>{
+    it('Logging data',()=>{
       //Log on the briowser console
       console.log('Ferro')
       //Log on the Cypress UI
       cy.log('Ferro')
     })
-
-
 
     it('Clicking the DOM', () => {
       cy.visit('https://example.cypress.io/commands/actions')
