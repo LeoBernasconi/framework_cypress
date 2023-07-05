@@ -92,7 +92,4 @@ describe('Introduction',function(){
         cy.get('input[value="radio2"]').check().should('be.checked')
     })
  
-
 })
-
-

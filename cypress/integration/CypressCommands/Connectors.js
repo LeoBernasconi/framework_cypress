@@ -74,8 +74,4 @@ describe('Connectors',function(){
     })
   })
 
-  
-  
-
-
 })

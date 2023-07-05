@@ -76,7 +76,49 @@ describe('Not requent commands',function(){
         //Using the environment variables
         cy.get('#inputUsername').type(Cypress.env('user'))
         cy.get('input[name="inputPassword"]').type(Cypress.env('pass'))
+    })    
+
+    it('End: End the command chain', () => {
+        cy.visit('https://example.cypress.io/commands/misc')
+        cy.get('.misc-table').within(() => {
+          //End the search when "Cheryl" has been found
+          cy.contains('Cheryl').click().end()
+          //Make a new "complete" search
+          cy.contains('Charles').click()
+        })
+      })
+
+    it('Screenshot: Force a screenshot', () => {
+        cy.screenshot('my-image')
     })
 
+    it('Screenshot: Change default config', function () {
+        Cypress.Screenshot.defaults({
+            blackout: ['.foo'],
+            capture: 'viewport',
+            clip: { x: 0, y: 0, width: 200, height: 200 },
+            scale: false,
+            disableTimersAndAnimations: true,
+            screenshotOnRunFailure: true,
+            onBeforeScreenshot () { },
+            onAfterScreenshot () { },
+        })
+    })
+
+    it('Clock: control time in the browser', () => {
+        const now = new Date(Date.UTC(2017, 2, 14)).getTime()
+        cy.clock(now)
+        cy.visit('https://example.cypress.io/commands/spies-stubs-clocks')
+        cy.get('#clock-div').click().should('have.text', '1489449600')
+      })
+
+    it('Tick: move time in the browser', () => {
+        const now = new Date(Date.UTC(2017, 2, 14)).getTime()
+        cy.clock(now)
+        cy.visit('https://example.cypress.io/commands/spies-stubs-clocks')
+        cy.get('#tick-div').click().should('have.text', '1489449600')
+        cy.tick(10000) // 10 seconds passed
+        cy.get('#tick-div').click().should('have.text', '1489449610')
+    }) 
 
 })

@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe('Assertions',function(){
 
     it('Assert existence',()=>{
@@ -24,6 +26,12 @@ describe('Assertions',function(){
         cy.get('.toggle-all').should('have.attr','type','checkbox')
         //Validate the existence of an attribute
         cy.get('.toggle-all').should('have.attr','type')
+    })
+
+    it('Assert an specific CSS property',()=>{
+        cy.visit('https://example.cypress.io/commands/querying')
+        cy.get('[data-test-id="test-example"]').invoke('css', 'position').should('equal', 'static')
+        cy.get('[data-test-id="test-example"]').should('have.css', 'position', 'static')
     })
 
     it('Assert class value',()=>{
@@ -70,7 +78,29 @@ describe('Assertions',function(){
         cy.get('.action-select-multiple').select(['apples', 'oranges', 'bananas'])
         .invoke('val').should('deep.equal', ['fr-apples', 'fr-oranges', 'fr-bananas']) 
         //Containing an option
-        cy.get('.action-select-multiple').invoke('val').should('include', 'fr-oranges')       
+        cy.get('.action-select-multiple').invoke('val').should('include', 'fr-oranges')
+        cy.visit('https://example.cypress.io/commands/querying')       
+        cy.get('.query-list').contains('bananas').should('have.class', 'third')
+        cy.get('.query-list').contains(/^b\w+/).should('have.class', 'third')
+        cy.get('.query-list').contains('apples').should('have.class', 'first')
+        cy.get('#querying').contains('ul', 'oranges').should('have.class', 'query-list')
+    })
+
+    it('Validating placeholders', () => {
+        cy.visit('https://example.cypress.io/commands/querying')
+        cy.get('.query-form').within(() => {
+            cy.get('input:first').should('have.attr', 'placeholder', 'Email')
+            cy.get('input:last').should('have.attr', 'placeholder', 'Password')
+        })
+        })
+
+    it('Wrap: Use to validate a json file', () => {
+        cy.wrap({ 
+            team: 'Ferro',
+            user: 'Leopa'
+            }).as('jsonFile')
+            cy.get('@jsonFile').should('have.property', 'team').and('include', 'Ferro')
+            cy.get('@jsonFile').should('have.property', 'user').and('include', 'Leopa')
     })
 
     it.skip('Assert: hidden elements',()=>{

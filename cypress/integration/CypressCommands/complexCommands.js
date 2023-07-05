@@ -75,5 +75,4 @@ describe('Complex elements', function(){
         cy.iframe().find('h2[class="pricing-title"]').should('have.length','2')
     })
 
-    
 })

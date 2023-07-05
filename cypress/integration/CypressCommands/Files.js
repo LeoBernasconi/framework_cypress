@@ -109,5 +109,16 @@ describe('Files - Excel', function(){
         })
     })
 
+})
+
+describe('Files: json', ()=>{
+
+    it('Getting several values of a field', () => {
+        cy.request('https://jsonplaceholder.cypress.io/users')
+          .then((response) => {
+            let ids = Cypress._.chain(response.body).map('id').take(3).value()
+            expect(ids).to.deep.eq([1, 2, 3])
+          })
+      })
 
 })
