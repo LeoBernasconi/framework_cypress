@@ -136,4 +136,22 @@ describe('Assertions',function(){
         cy.contains('Submit').should('exist').and('have.attr', 'type')   
     })
 
+    it('Validate all table values of a column',()=>{
+        cy.get('.column_id')
+            .should('have.length', 5)
+            .then(($value) => Cypress._.map($value, 'innerText'))
+            .should('be.an', 'array')
+            .and('deep.equal', [
+            'test1@test.com',
+            'test2@test.com',
+            'test3@test.com',
+            'test4@test.com',
+            'test5@test.com',
+        ]);
+    })
+ 
+
+
+
+
 })

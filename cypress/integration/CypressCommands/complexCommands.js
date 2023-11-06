@@ -31,7 +31,7 @@ describe('Complex elements', function(){
         cy.get('#opentab').invoke('removeAttr','target').click()         
     })
 
-    it('Switch between domains', function(){
+    it.only('Switch between domains', function(){
         cy.visit('https://rahulshettyacademy.com/AutomationPractice/')
         cy.get('#opentab').then(function(newObject){
             const newUrl = newObject.prop('href')
@@ -65,6 +65,11 @@ describe('Complex elements', function(){
         cy.contains('Reload').click({force: true})
         cy.url().should('not.contain','top')
     })
+
+    it('Hoover on an element to validate its tooltip',function(){
+        cy.get('.name_of_the_element').trigger('mouseenter')
+        cy.contains('Text of the tooltip').should('be.visible')
+    })    
     
     it('Working with iFrames',function(){
         //Need to install cypress-iframe --> npm install -D cypress-iframe (and then import it int he spec)

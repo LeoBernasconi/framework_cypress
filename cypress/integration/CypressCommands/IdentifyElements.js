@@ -26,6 +26,11 @@ describe('Identify elements', function(){
     //cy.get('input[value="checkbox1"]').eq(3).check() --> Not existent element --> FAIL
   })
 
+  it('Identifying elements: Partial value  in the attribute',()=>{
+    //Id like "some_value_65498736123"
+    cy.get('div[id^="some_value-"]')
+  })
+
   it('Identifying element: parent and children',()=>{
     cy.visit('https://example.cypress.io/todo')
     //Get the children by element type (indicanting the element typ (li))
