@@ -55,6 +55,18 @@ describe('Complex elements', function(){
         })
     })
 
+    it('Intercept endpoints to execute actions',function(){
+        cy.intercept('GET', '**/{part_of_the_url}/').as('something');
+        locator_1.click()
+        cy.wait(1500);//Optional
+        cy.wait('@something')
+            .then(({request, response}) => {
+                locator_2.click()
+                //Other actions/assertions
+            })
+
+    })
+
     it('Mouse move',function(){
         cy.visit('https://rahulshettyacademy.com/AutomationPractice/')
         //Use mouse move to show a menu and click an option
